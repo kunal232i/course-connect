@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./components/Login";
 import Landing from "./components/Landing";
 import CreateCourse from "./components/CreateCourse";
-import Signup from "./components/Register";
+import Signup from "./components/Signup";
 import ShowCourses from "./components/ShowCourses";
 import Navbar from "./components/Navbar";
 import UpdateCourse from "./components/UpdateCourse";

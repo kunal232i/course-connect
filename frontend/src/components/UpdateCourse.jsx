@@ -4,7 +4,7 @@ import { Card, TextField, Typography, Grid, Button } from "@mui/material";
 import axios from "axios";
 
 const UpdateCourse = () => {
-  const url = import.meta.env.BASE_URL;
+  const url = import.meta.env.VITE_BASE_URL;
   let { courseId } = useParams();
   const [course, setCourse] = useState(null);
   useEffect(() => {

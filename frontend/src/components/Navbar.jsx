@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 
 const Navbar = () => {
-  const url = import.meta.env.BASE_URL;
+  const url = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [email, setEmail] = useState(null);
   const [loggedIn, setLoggedIn] = useState(false);

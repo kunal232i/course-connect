@@ -20,10 +20,10 @@ cd course-connect/frontend
 
 3. Before running the frontend, make sure you have the backend up and running. If you haven't set up the backend yet, you can find the instructions here: [Course Connect Backend](https://github.com/kunal232i/course-connect/tree/main/backend).
 
-4. Set up the environment variable by creating a `.env` file in the root of the frontend directory. Replace the `BASE_URL` with the backend base URL. For example:
+4. Set up the environment variable by creating a `.env` file in the root of the frontend directory. Replace the `VITE_VITE_BASE_URL` with the backend base URL. For example:
 
 ```plaintext
-BASE_URL="http://localhost:8000"
+VITE_VITE_BASE_URL="http://localhost:8000"
 ```
 
 Make sure to replace `http://localhost:8000` with the actual base URL of your backend API.

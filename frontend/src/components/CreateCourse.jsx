@@ -9,7 +9,7 @@ import {
 import axios from "axios";
 
 function CreateCourse() {
-  const url = import.meta.env.BASE_URL;
+  const url = import.meta.env.VITE_BASE_URL;
   const [title, setTitle] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [price, setPrice] = React.useState("");

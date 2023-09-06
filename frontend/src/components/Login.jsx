@@ -4,7 +4,7 @@ import { TextField, Card, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const url = import.meta.env.BASE_URL;
+  const url = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");

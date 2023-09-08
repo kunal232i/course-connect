@@ -4,7 +4,7 @@ Course Connect is a user-friendly application where users can create and sell co
 
 Live URL: [https://courseconnect.netlify.app/](https://courseconnect.netlify.app/)
 
-Please note that the backend is not deployed yet 😅, but you can set it up locally to run the application. Below are the instructions for setting up both the frontend and backend components:
+you can set it up locally to run the application. Below are the instructions for setting up both the frontend and backend components:
 
 ## Frontend
 

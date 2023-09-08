@@ -1,109 +1,123 @@
 import React from "react";
-import axios from "axios";
-import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Typography, Button } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
+import { isUserLoading } from "../store/selectors/isUserLoading";
+import { useSetRecoilState, useRecoilValue } from "recoil";
+import { userState } from "../store/atoms/user.js";
+import { userEmailState } from "../store/selectors/userEmail";
 
 const Navbar = () => {
-  const url = import.meta.env.VITE_BASE_URL;
   const navigate = useNavigate();
-  const [email, setEmail] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const userLoading = useRecoilValue(isUserLoading);
+  const userEmail = useRecoilValue(userEmailState);
+  const setUser = useSetRecoilState(userState);
 
-  useEffect(() => {
-    userEmail();
-  }, []);
+  if (userLoading) {
+    return <></>;
+  }
 
-  const userEmail = async () => {
-    const token = localStorage.getItem("token");
-    const auth = `Bearer ${token}`;
+  if (userEmail) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: 4,
+          zIndex: 1,
+        }}
+      >
+        <div
+          style={{ marginLeft: 10, cursor: "pointer" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <Typography variant={"h6"}>Course Connect</Typography>
+        </div>
 
-    try {
-      const res = await axios.get(`${url}/admin/me`, {
-        headers: {
-          Authorization: auth,
-        },
-      });
-      setLoggedIn(true);
-      setEmail(res.data.username);
-    } catch (error) {
-      setLoggedIn(false);
-      console.log("Error : " + error);
-    }
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
-  };
-
-  const handleSignup = () => {
-    navigate("/signup");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setLoggedIn(false);
-    setUsername("");
-  };
-
-  const handleCourse = () => {
-    navigate("/createCourse");
-  };
-
-  const handleCourses = () => {
-    navigate("/courses");
-  };
-
-  const handleHome = () => {
-    navigate("/");
-  };
-
-  return (
-    <Box>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6" sx={{ flexGrow: 1 }} component={Link} to="/">
-            CourseConnect{" "}
-          </Typography>
-          {loggedIn ? (
-            <>
-              <Button variant="contained" onClick={handleCourses}>
-                {" "}
-                Courses{" "}
-              </Button>
-              <Button variant="contained" onClick={handleCourse}>
-                {" "}
-                Add Course{" "}
-              </Button>
-              <Typography
-                variant="subtitle1"
-                component="span"
-                sx={{ marginRight: "1rem" }}
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: 10, display: "flex" }}>
+            <div style={{ marginRight: 10 }}>
+              <Button
+                onClick={() => {
+                  navigate("/createCourse");
+                }}
               >
-                {" "}
-                {email}{" "}
-              </Typography>
-              <Button variant="contained" onClick={handleLogout}>
-                {" "}
-                Logout{" "}
+                Add course
               </Button>
-            </>
-          ) : (
-            <>
-              <Button variant="contained" onClick={handleLogin}>
-                {" "}
-                Login{" "}
+            </div>
+
+            <div style={{ marginRight: 10 }}>
+              <Button
+                onClick={() => {
+                  navigate("/courses");
+                }}
+              >
+                Courses
               </Button>
-              <Button variant="contained" onClick={handleSignup}>
-                {" "}
-                Signup{" "}
-              </Button>
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </Box>
-  );
+            </div>
+
+            <Button
+              variant={"contained"}
+              onClick={() => {
+                localStorage.setItem("token", null);
+                setUser({
+                  isLoading: false,
+                  userEmail: null,
+                });
+                navigate("/");
+              }}
+            >
+              Logout
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: 4,
+          zIndex: 1,
+        }}
+      >
+        <div
+          style={{ marginLeft: 10, cursor: "pointer" }}
+          onClick={() => {
+            navigate("/");
+          }}
+        >
+          <Typography variant={"h6"}>Course Connect</Typography>
+        </div>
+
+        <div style={{ display: "flex" }}>
+          <div style={{ marginRight: 10 }}>
+            <Button
+              variant={"contained"}
+              onClick={() => {
+                navigate("/signup");
+              }}
+            >
+              Signup
+            </Button>
+          </div>
+          <div>
+            <Button
+              variant={"contained"}
+              onClick={() => {
+                navigate("/login");
+              }}
+            >
+              Signin
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 };
 
 export default Navbar;

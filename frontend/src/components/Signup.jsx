@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { TextField, Card, Button } from "@mui/material";
+import { TextField, Typography, Card, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../store/atoms/user.js";
 
 const Signup = () => {
   const url = import.meta.env.VITE_BASE_URL;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const setUser = useSetRecoilState(userState);
 
-  const handleSingup = async () => {
+  const handleSignup = async () => {
     try {
       const res = await axios.post(`${url}/admin/signup`, {
         username: email,
@@ -18,48 +21,57 @@ const Signup = () => {
       const TOKEN = res.data.token;
       localStorage.setItem("token", TOKEN);
       console.log(res.data);
+      setUser({userEmail: email, isLoading: false})
       navigate("/courses");
     } catch (error) {
-      console.log("Error : " + error);
+      console.log("Error: " + error);
     }
   };
 
   return (
-    <div style={{ background: "#3AA6B9", width: "100%", height: "100%" }}>
-      <center style={{ padding: "200px" }}>
-        <Card varient={"outlined"} style={{ width: "400px", padding: "20px" }}>
-          <h1>Register to the website</h1>
-          <br />
+    <div>
+      <div
+        style={{
+          paddingTop: 150,
+          marginBottom: 10,
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Typography variant={"h6"}>
+          Welcome to Course Connect. Sign up below
+        </Typography>
+      </div>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <Card variant={"outlined"} style={{ width: 400, padding: 20 }}>
           <TextField
-            id="outlined-basic"
-            label="Email"
-            type="email"
-            value={email}
-            variant="outlined"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <br /> <br />
-          <TextField
-            id="outlined-password-input"
-            label="Password"
-            type="password"
-            value={password}
-            autoComplete="current-password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <br /> <br />
-          Already a user? <a href="/login">Login</a>
-          <br /> <br />
-          <Button
-            variant={"contained"}
-            onClick={() => {
-              handleSingup();
+            onChange={(event) => {
+              setEmail(event.target.value);
             }}
+            fullWidth={true}
+            label="Email"
+            variant="outlined"
+          />
+          <br/><br/>
+          <TextField
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+            fullWidth={true}
+            label="Password"
+            variant="outlined"
+            type={"password"}
+          />
+          <br/><br/>
+          <Button
+            size={"large"}
+            variant="contained"
+            onClick={handleSignup}
           >
-            Register
+            Signup
           </Button>
         </Card>
-      </center>
+      </div>
     </div>
   );
 };

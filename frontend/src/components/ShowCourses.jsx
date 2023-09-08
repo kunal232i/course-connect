@@ -36,13 +36,12 @@ function ShowCourses() {
 
   return (
     <Box
-      bgcolor="#3AA6B9"
       width="100%"
       minHeight="100vh"
       pt={2}
       textAlign="center"
     >
-      <Typography variant="h4" component="h1" color="white" mb={2}>
+      <Typography variant="h4" component="h1" color="black" mb={2}>
         All Courses
       </Typography>
       <Grid container spacing={3}>
@@ -56,66 +55,34 @@ function ShowCourses() {
   );
 }
 
-function Course({ course }) {
-  const navigate = useNavigate();
+export function Course({course}) {
+    const navigate = useNavigate();
 
-  return (
-    <Card
-      variant="outlined"
-      style={{
-        backgroundColor: "#f0f0f0",
-        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <CardContent>
-        <Typography variant="h5" component="h2" gutterBottom>
-          {course.title}
-        </Typography>
-        <Typography variant="body2" component="p" color="textSecondary">
-          {course.description}
-        </Typography>
-        <Typography variant="h6" component="p" gutterBottom>
-          Price: ${course.price}
-        </Typography>
-        <div
-          style={{
-            position: "relative",
-            width: "100%",
-            height: 200,
-            marginBottom: 16,
-          }}
-        >
-          <img
+    return <Card style={{
+        margin: 10,
+        width: 300,
+        minHeight: 200,
+        padding: 20
+    }}>
+        <Typography textAlign={"center"} variant="h5">{course.title}</Typography>
+        <Typography textAlign={"center"} variant="subtitle1">{course.description}</Typography>
+        <img
             src={course.image}
             alt={course.title}
             style={{
-              width: "100%",
-              height: "100%",
+              width: "200px",
+              height: "200px",
               objectFit: "cover",
               borderRadius: 4,
             }}
           />
+        <div style={{display: "flex", justifyContent: "center", marginTop: 20}}>
+            <Button variant="contained" size="large" onClick={() => {
+                navigate("/course/" + course._id);
+            }}>Edit</Button>
         </div>
-        <Typography variant="body2" component="p" color="textSecondary">
-          Published: {course.published ? "Yes" : "No"}
-        </Typography>
-        <Button
-          variant="contained"
-          onClick={() => {
-            navigate("/updateCourse/" + course._id);
-          }}
-          style={{
-            marginTop: 16,
-            marginLeft: "auto",
-            marginRight: "auto",
-            display: "block",
-          }}
-        >
-          Edit
-        </Button>
-      </CardContent>
     </Card>
-  );
+
 }
 
 export default ShowCourses;

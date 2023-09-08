@@ -1,86 +1,54 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import {useRecoilValue} from "recoil";
+import { userEmailState } from "../store/selectors/userEmail"
+import {isUserLoading} from "../store/selectors/isUserLoading.js";
 
 const Landing = () => {
   const navigate = useNavigate();
+  const userEmail = useRecoilValue(userEmailState);
+  const userLoading = useRecoilValue(isUserLoading);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-  };
-
-  const handleLogIn = () => {
-    navigate("/login");
-  };
-
-  const handleSignUp = () => {
-    navigate("/signup");
-  };
-
-  const isLoggedIn = localStorage.getItem("token");
-
-  return (
-    <div>
-      <div sx={{ padding: "40px 0" }}>
-        <Container maxWidth="md">
-          <Typography
-            variant="h2"
-            align="center"
-            color="textPrimary"
-            gutterBottom
-          >
-            Welcome to the Course Selling Website!
-          </Typography>
-          <Typography
-            variant="h5"
-            align="center"
-            color="textSecondary"
-            paragraph
-          >
-            Learn and grow with our diverse collection of high-quality courses
-            taught by experts in their fields.
-          </Typography>
-          <div sx={{ textAlign: "center", marginTop: "20px" }}>
-            <Grid container spacing={2} justifyContent="center">
-              {isLoggedIn ? (
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    onClick={handleLogout}
-                    color="primary"
-                  >
-                    Logout
-                  </Button>
-                </Grid>
-              ) : (
-                <>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      onClick={handleSignUp}
-                      color="primary"
-                    >
-                      Register
-                    </Button>
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      onClick={handleLogIn}
-                      color="primary"
-                    >
-                      LogIn
-                    </Button>
-                  </Grid>
-                </>
-              )}
+  return <div>
+        <Grid container style={{padding: "5vw"}}>
+            <Grid item xs={12} md={6} lg={6}>
+                <div style={{marginTop: 100}}>
+                    <Typography variant={"h2"}>
+                        Course Connect Admin
+                    </Typography>
+                    <Typography variant={"h5"}>
+                        A place to learn, earn and grow
+                    </Typography>
+                    {!userLoading && !userEmail && <div style={{display: "flex", marginTop: 20}}>
+                        <div style={{marginRight: 10}}>
+                            <Button
+                                size={"large"}
+                                variant={"contained"}
+                                onClick={() => {
+                                    navigate("/signup")
+                                }}
+                            >Signup</Button>
+                        </div>
+                        <div>
+                            <Button
+                                size={"large"}
+                                variant={"contained"}
+                                onClick={() => {
+                                    navigate("/login")
+                                }}
+                            >Signin</Button>
+                        </div>
+                    </div>}
+                </div>
+                <div>
+                </div>
             </Grid>
-          </div>
-        </Container>
-      </div>
+            <Grid item xs={12} md={6} lg={6}  style={{marginTop: 20}}>
+                <img src={"/class.jpg"} width={"400px"} />
+            </Grid>
+        </Grid>
     </div>
-  );
 };
 
 export default Landing;

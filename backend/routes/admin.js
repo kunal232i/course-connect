@@ -53,7 +53,7 @@ router.post("/courses", authAdminMiddleware, async (req, res) => {
     .json({ message: "course created sucessfully!!", courseId: newCourse.id });
 });
 
-router.put("/courses/:courseId", authAdminMiddleware, async (req, res) => {
+router.put("/course/:courseId", authAdminMiddleware, async (req, res) => {
   const courseFound = await COURSE.findByIdAndUpdate(
     req.params.courseId,
     req.body,
@@ -69,6 +69,12 @@ router.put("/courses/:courseId", authAdminMiddleware, async (req, res) => {
 router.get("/courses", authAdminMiddleware, async (req, res) => {
   const courses = await COURSE.find({});
   res.json({ courses });
+});
+
+router.get("/course/:courseId", authAdminMiddleware, async (req, res) => {
+  const courseId = req.params.courseId;
+  const course = await COURSE.findById(courseId);
+  res.json({ course });
 });
 
 module.exports = router;

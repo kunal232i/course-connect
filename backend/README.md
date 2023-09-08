@@ -230,7 +230,7 @@ npm start
 #### Update Course
 
 - Method: PUT
-- URL: `/admin/courses/:courseId`
+- URL: `/admin/course/:courseId`
 - Authorization: Bearer \<admin_access_token\>
 - Request Body:
   ```

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TextField,
   Card,
@@ -10,18 +10,18 @@ import axios from "axios";
 
 function CreateCourse() {
   const url = import.meta.env.VITE_BASE_URL;
-  const [title, setTitle] = React.useState("");
-  const [description, setDescription] = React.useState("");
-  const [price, setPrice] = React.useState("");
-  const [fileLink, setFileLink] = React.useState("");
-  const [checked, setChecked] = React.useState(true);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const [price, setPrice] = useState(0);
+  const [checked, setChecked] = useState(true);
 
   const handleSubmit = async () => {
     const newCourse = {
       title,
       description,
       price,
-      image: fileLink,
+      image: image,
       published: checked,
     };
 
@@ -34,8 +34,9 @@ function CreateCourse() {
         },
       });
       console.log(res.data);
+      alert("Course Added!");
     } catch (error) {
-      console.log("Errors : " + error);
+      console.log("Errors: " + error);
     }
   };
 
@@ -46,65 +47,71 @@ function CreateCourse() {
   return (
     <div
       style={{
-        background: "#3AA6B9",
-        width: "100%",
-        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        minHeight: "80vh",
+        flexDirection: "column",
       }}
     >
-      <center style={{ padding: "200px" }}>
+      <div style={{ display: "flex", justifyContent: "center" }}>
         <Card
-          varient={"outlined"}
-          style={{
-            width: "400px",
-            padding: "20px",
-          }}
+          variant={"outlined"}
+          style={{ width: 400, padding: 20, marginTop: 30, height: "100%" }}
         >
-          <h1>Create Course Page</h1>
           <TextField
-            id="outlined-basic"
+            style={{ marginBottom: 10 }}
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
+            fullWidth={true}
             label="Title"
-            type="text"
-            onChange={(e) => setTitle(e.target.value)}
+            variant="outlined"
           />
-          <br /> <br />
+
           <TextField
-            id="outlined-basic"
+            style={{ marginBottom: 10 }}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
+            fullWidth={true}
             label="Description"
-            type="text"
-            onChange={(e) => setDescription(e.target.value)}
+            variant="outlined"
           />
-          <br /> <br />
+
           <TextField
-            id="outlined-basic"
+            style={{ marginBottom: 10 }}
+            onChange={(e) => {
+              setImage(e.target.value);
+            }}
+            fullWidth={true}
+            label="Image link"
+            variant="outlined"
+          />
+
+          <TextField
+            style={{ marginBottom: 10 }}
+            onChange={(e) => {
+              setPrice(e.target.value);
+            }}
+            fullWidth={true}
             label="Price"
-            type="number"
-            onChange={(e) => setPrice(e.target.value)}
+            variant="outlined"
           />
-          <br /> <br />
-          <TextField
-            id="outlined-basic"
-            label="Img-Link"
-            type="text"
-            value={fileLink}
-            onChange={(e) => setFileLink(e.target.value)}
-          />
-          <br /> <br />
           <FormControlLabel
             control={<Checkbox checked={checked} onChange={handleChange} />}
             label="Published"
           />
-          <br /> <br />
+          <br /><br />
+
           <Button
-            variant={"contained"}
-            onClick={() => {
-              handleSubmit();
-            }}
-          >
-            Create Course
-          </Button>
+            size={"large"}
+            variant="contained"
+            onClick={handleSubmit}
+          > Add course</Button>
         </Card>
-      </center>
+      </div>
     </div>
   );
 }
+
 export default CreateCourse;

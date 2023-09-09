@@ -13,6 +13,7 @@ import {
 } from 'recoil';
 import axios from "axios";
 import {useEffect} from "react";
+import {BASE_URL} from "./config";
 
 function App() {
   return (
@@ -39,11 +40,11 @@ function App() {
 }
 
 function InitUser() {
-    const url = import.meta.env.VITE_BASE_URL;
+    console.log(BASE_URL);
     const setUser = useSetRecoilState(userState);
     const init = async() => {
         try {
-            const response = await axios.get(`${url}/admin/me`, {
+            const response = await axios.get(`${BASE_URL}/admin/me`, {
                 headers: {
                     "Authorization": "Bearer " + localStorage.getItem("token")
                 }

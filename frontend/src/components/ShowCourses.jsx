@@ -9,9 +9,9 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {BASE_URL} from "../config";
 
 function ShowCourses() {
-  const url = import.meta.env.VITE_BASE_URL;
   const [courses, setCourses] = useState([]);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ function ShowCourses() {
     const token = localStorage.getItem("token");
     const auth = `Bearer ${token}`;
     try {
-      const res = await axios.get(`${url}/admin/courses`, {
+      const res = await axios.get(`${BASE_URL}/admin/courses`, {
         headers: {
           Authorization: auth,
         },

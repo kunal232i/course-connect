@@ -7,9 +7,9 @@ import {
   FormControlLabel,
 } from "@mui/material";
 import axios from "axios";
+import {BASE_URL} from "../config";
 
 function CreateCourse() {
-  const url = import.meta.env.VITE_BASE_URL;
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
@@ -28,7 +28,7 @@ function CreateCourse() {
     try {
       const token = localStorage.getItem("token");
       const auth = `Bearer ${token}`;
-      const res = await axios.post(`${url}/admin/courses`, newCourse, {
+      const res = await axios.post(`${BASE_URL}/admin/courses`, newCourse, {
         headers: {
           Authorization: auth,
         },

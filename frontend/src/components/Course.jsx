@@ -6,15 +6,15 @@ import { courseState } from "../store/atoms/course";
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import { courseTitle, coursePrice, isCourseLoading, courseImage } from "../store/selectors/course";
 import {Loading} from "./Loading";
+import {BASE_URL} from "../config";
 
 const Course = () => {
-  const url = import.meta.env.VITE_BASE_URL;
     let { courseId } = useParams();
     const setCourse = useSetRecoilState(courseState);
     const courseLoading = useRecoilValue(isCourseLoading);
 
     useEffect(() => {
-        axios.get(`${url}/admin/course/${courseId}`, {
+        axios.get(`${BASE_URL}/admin/course/${courseId}`, {
             method: "GET",
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
@@ -58,7 +58,6 @@ function GrayTopper() {
 }
 
 function UpdateCard() {
-    const url = import.meta.env.VITE_BASE_URL;
     const [courseDetails, setCourse] = useRecoilState(courseState);
 
     const [title, setTitle] = useState(courseDetails.course.title);
@@ -116,7 +115,7 @@ function UpdateCard() {
             <Button
                 variant="contained"
                 onClick={async () => {
-                    axios.put(`${url}/admin/course/` + courseDetails.course._id, {
+                    axios.put(`${BASE_URL}/admin/course/` + courseDetails.course._id, {
                         title: title,
                         description: description,
                         image: image,

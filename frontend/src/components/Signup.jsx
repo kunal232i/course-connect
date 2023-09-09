@@ -4,9 +4,9 @@ import { TextField, Typography, Card, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../store/atoms/user.js";
+import {BASE_URL} from "../config";
 
 const Signup = () => {
-  const url = import.meta.env.VITE_BASE_URL;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Signup = () => {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post(`${url}/admin/signup`, {
+      const res = await axios.post(`${BASE_URL}/admin/signup`, {
         username: email,
         password: password,
       });

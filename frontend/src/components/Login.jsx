@@ -4,9 +4,10 @@ import { TextField, Card, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../store/atoms/user.js";
+import {BASE_URL} from "../config";
 
 function Login() {
-  const url = import.meta.env.VITE_BASE_URL;
+  console.log(BASE_URL);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function Login() {
   
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`${url}/admin/login`, {
+      const res = await axios.post(`${BASE_URL}/admin/login`, {
         username: email,
         password: password,
       });

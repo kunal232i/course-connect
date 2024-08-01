@@ -40,7 +40,6 @@ function App() {
 }
 
 function InitUser() {
-    console.log(BASE_URL);
     const setUser = useSetRecoilState(userState);
     const init = async() => {
         try {

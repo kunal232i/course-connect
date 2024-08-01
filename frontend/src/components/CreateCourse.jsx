@@ -33,7 +33,6 @@ function CreateCourse() {
           Authorization: auth,
         },
       });
-      console.log(res.data);
       alert("Course Added!");
     } catch (error) {
       console.log("Errors: " + error);

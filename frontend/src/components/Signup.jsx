@@ -20,7 +20,6 @@ const Signup = () => {
       });
       const TOKEN = res.data.token;
       localStorage.setItem("token", TOKEN);
-      console.log(res.data);
       setUser({userEmail: email, isLoading: false})
       navigate("/courses");
     } catch (error) {

@@ -27,7 +27,6 @@ function ShowCourses() {
           Authorization: auth,
         },
       });
-      console.log(res.data.courses);
       setCourses(res.data.courses);
     } catch (error) {
       console.log("Error :" + error);
